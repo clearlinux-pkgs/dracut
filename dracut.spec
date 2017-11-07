@@ -1,15 +1,15 @@
 Name:           dracut
-Version:        043
-Release:        17
+Version:        046
+Release:        18
 License:        GPL-2.0+ LGPL-2.1+
 Summary:        Initramfs generator
 Url:            https://dracut.wiki.kernel.org/
 Group:          base
-Source0:        https://www.kernel.org/pub/linux/utils/boot/dracut/dracut-043.tar.xz
+Source0:        https://www.kernel.org/pub/linux/utils/boot/dracut/dracut-046.tar.xz
 Requires:       libc-bin
 Requires:       findutils-bin
 Requires:       cpio-bin
-Patch1:         0002-Fix-default-udev-systemd-dir-detection-in-usr-merge-.patch
+BuildRequires:  kmod-dev
 
 %description
 Initramfs generator.
@@ -37,7 +37,6 @@ Initramfs generator.
 
 %prep
 %setup -q
-%patch1 -p1
 
 %build
 ./configure --disable-documentation
@@ -87,6 +86,7 @@ rm -f %{buildroot}%{_sysconfdir}/dracut.conf
 %{_bindir}/lsinitrd
 %dir %{_prefix}/lib/dracut
 %dir %{_prefix}/lib/dracut/modules.d
+%{_prefix}/lib/dracut/dracut-init.sh
 %{_prefix}/lib/dracut/dracut-functions.sh
 %{_prefix}/lib/dracut/dracut-functions
 %{_prefix}/lib/dracut/dracut-version.sh
@@ -109,15 +109,20 @@ rm -f %{buildroot}%{_sysconfdir}/dracut.conf
 %{_prefix}/lib/dracut/modules.d/50plymouth
 %{_prefix}/lib/dracut/modules.d/50drm/module-setup.sh
 %{_prefix}/lib/dracut/modules.d/80cms
+%{_prefix}/lib/dracut/modules.d/80lvmmerge/README.md
+%{_prefix}/lib/dracut/modules.d/80lvmmerge/lvmmerge.sh
+%{_prefix}/lib/dracut/modules.d/80lvmmerge/module-setup.sh
 %{_prefix}/lib/dracut/modules.d/90btrfs
 %{_prefix}/lib/dracut/modules.d/90crypt
 %{_prefix}/lib/dracut/modules.d/90dm
 %{_prefix}/lib/dracut/modules.d/90dmraid
 %{_prefix}/lib/dracut/modules.d/90dmsquash-live
+%{_prefix}/lib/dracut/modules.d/90dmsquash-live-ntfs/module-setup.sh
 %{_prefix}/lib/dracut/modules.d/90kernel-modules
 %{_prefix}/lib/dracut/modules.d/90lvm
 %{_prefix}/lib/dracut/modules.d/90mdraid
 %{_prefix}/lib/dracut/modules.d/90multipath
+%{_prefix}/lib/dracut/modules.d/90multipath-hostonly/module-setup.sh
 %{_prefix}/lib/dracut/modules.d/90qemu
 %{_prefix}/lib/dracut/modules.d/91crypt-gpg
 %{_prefix}/lib/dracut/modules.d/91crypt-loop
