@@ -1,6 +1,6 @@
 Name:           dracut
 Version:        046
-Release:        18
+Release:        19
 License:        GPL-2.0+ LGPL-2.1+
 Summary:        Initramfs generator
 Url:            https://dracut.wiki.kernel.org/
@@ -26,13 +26,6 @@ Requires:       %{name} = %{version}
 Requires:       libcap-bin
 
 %description -n dracut-caps
-Initramfs generator.
-
-%package -n dracut-tools
-Summary:        Initramfs generator
-Requires:       %{name} = %{version}
-
-%description -n dracut-tools
 Initramfs generator.
 
 %prep
@@ -66,12 +59,6 @@ rm -fr %{buildroot}/%{_prefix}/lib/dracut/modules.d/97masterkey
 rm -fr %{buildroot}/%{_prefix}/lib/dracut/modules.d/98integrity
 rm -fr %{buildroot}/%{_prefix}/lib/dracut/modules.d/98selinux
 
-mkdir -p %{buildroot}/boot/dracut
-mkdir -p %{buildroot}%{_localstatedir}/lib/dracut/overlay
-mkdir -p %{buildroot}%{_localstatedir}/log
-touch %{buildroot}%{_localstatedir}/log/dracut.log
-mkdir -p %{buildroot}%{_sharedstatedir}/initramfs
-
 # Ensure dracut is executable
 chmod +x %{buildroot}%{_bindir}/dracut
 chmod +x %{buildroot}%{_prefix}/lib/dracut/dracut-install
@@ -81,6 +68,7 @@ rm -f %{buildroot}%{_sysconfdir}/dracut.conf
 
 %files
 %{_bindir}/dracut
+%{_bindir}/dracut-catimages
 # compat symlink
 %{_bindir}/mkinitrd
 %{_bindir}/lsinitrd
@@ -157,8 +145,6 @@ rm -f %{buildroot}%{_sysconfdir}/dracut.conf
 %{_prefix}/lib/dracut/modules.d/95zfcp_rules/parse-zfcp.sh
 %{_prefix}/lib/dracut/modules.d/99uefi-lib/module-setup.sh
 %{_prefix}/lib/dracut/modules.d/99uefi-lib/uefi-lib.sh
-%attr(0644,root,root) %ghost %config(missingok,noreplace) %{_localstatedir}/log/dracut.log
-%dir %{_sharedstatedir}/initramfs
 %{_prefix}/lib/systemd/system/dracut-shutdown.service
 %{_prefix}/lib/systemd/system/sysinit.target.wants/dracut-shutdown.service
 %{_prefix}/lib/systemd/system/dracut-cmdline.service
@@ -200,9 +186,3 @@ rm -f %{buildroot}%{_sysconfdir}/dracut.conf
 %defattr(0644,root,root,0755)
 %{_prefix}/lib/dracut/modules.d/02caps
 
-%files -n dracut-tools
-%defattr(0644,root,root,0755)
-%{_bindir}/dracut-catimages
-%dir /boot/dracut
-%dir %{_localstatedir}/lib/dracut
-%dir %{_localstatedir}/lib/dracut/overlay
