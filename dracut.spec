@@ -1,6 +1,6 @@
 Name:           dracut
 Version:        046
-Release:        19
+Release:        20
 License:        GPL-2.0+ LGPL-2.1+
 Summary:        Initramfs generator
 Url:            https://dracut.wiki.kernel.org/
@@ -38,151 +38,151 @@ make all
 
 %install
 make install DESTDIR=%{buildroot} \
-     libdir=%{_prefix}/lib \
-     bindir=%{_bindir} \
-     systemdsystemunitdir=%{_prefix}/lib/systemd/system \
-     sysconfdir=%{_sysconfdir} mandir=%{_mandir}
+     libdir=/usr/lib \
+     bindir=/usr/bin \
+     systemdsystemunitdir=/usr/lib/systemd/system \
+     sysconfdir=/etc mandir=/usr/share/man
 
 release=%{release}
 release_no_build=${release%.*}
-echo "DRACUT_VERSION=%{version}-$release_no_build" > %{buildroot}/%{_prefix}/lib/dracut/dracut-version.sh
+echo "DRACUT_VERSION=%{version}-$release_no_build" > %{buildroot}/usr/lib/dracut/dracut-version.sh
 
-rm -fr %{buildroot}/%{_prefix}/lib/dracut/modules.d/01fips
-rm -fr %{buildroot}/%{_prefix}/lib/dracut/modules.d/02fips-aesni
+rm -fr %{buildroot}/usr/lib/dracut/modules.d/01fips
+rm -fr %{buildroot}/usr/lib/dracut/modules.d/02fips-aesni
 
 # remove gentoo specific modules
-rm -fr %{buildroot}/%{_prefix}/lib/dracut/modules.d/50gensplash
+rm -fr %{buildroot}/usr/lib/dracut/modules.d/50gensplash
 
 # with systemd IMA and selinux modules do not make sense
-rm -fr %{buildroot}/%{_prefix}/lib/dracut/modules.d/96securityfs
-rm -fr %{buildroot}/%{_prefix}/lib/dracut/modules.d/97masterkey
-rm -fr %{buildroot}/%{_prefix}/lib/dracut/modules.d/98integrity
-rm -fr %{buildroot}/%{_prefix}/lib/dracut/modules.d/98selinux
+rm -fr %{buildroot}/usr/lib/dracut/modules.d/96securityfs
+rm -fr %{buildroot}/usr/lib/dracut/modules.d/97masterkey
+rm -fr %{buildroot}/usr/lib/dracut/modules.d/98integrity
+rm -fr %{buildroot}/usr/lib/dracut/modules.d/98selinux
 
 # Ensure dracut is executable
 chmod +x %{buildroot}%{_bindir}/dracut
-chmod +x %{buildroot}%{_prefix}/lib/dracut/dracut-install
+chmod +x %{buildroot}/usr/lib/dracut/dracut-install
 
 # Drop empty file
 rm -f %{buildroot}%{_sysconfdir}/dracut.conf
 
 %files
-%{_bindir}/dracut
-%{_bindir}/dracut-catimages
+/usr/bin/dracut
+/usr/bin/dracut-catimages
 # compat symlink
-%{_bindir}/mkinitrd
-%{_bindir}/lsinitrd
-%dir %{_prefix}/lib/dracut
-%dir %{_prefix}/lib/dracut/modules.d
-%{_prefix}/lib/dracut/dracut-init.sh
-%{_prefix}/lib/dracut/dracut-functions.sh
-%{_prefix}/lib/dracut/dracut-functions
-%{_prefix}/lib/dracut/dracut-version.sh
-%{_prefix}/lib/dracut/dracut-logger.sh
-%{_prefix}/lib/dracut/dracut-initramfs-restore
-%{_prefix}/lib/dracut/dracut-install
-%{_prefix}/lib/dracut/skipcpio
-%{_prefix}/lib/dracut/modules.d/00dash
-%{_prefix}/lib/dracut/modules.d/00bootchart
-%{_prefix}/lib/dracut/modules.d/00systemd-bootchart/module-setup.sh
-%{_prefix}/lib/dracut/modules.d/00systemd/module-setup.sh
-%{_prefix}/lib/dracut/modules.d/01systemd-initrd/module-setup.sh
-%{_prefix}/lib/dracut/modules.d/02systemd-networkd/module-setup.sh
-%{_prefix}/lib/dracut/modules.d/03rescue/module-setup.sh
-%{_prefix}/lib/dracut/modules.d/04watchdog
-%{_prefix}/lib/dracut/modules.d/05busybox
-%{_prefix}/lib/dracut/modules.d/10i18n
-%{_prefix}/lib/dracut/modules.d/30convertfs
-%{_prefix}/lib/dracut/modules.d/45url-lib
-%{_prefix}/lib/dracut/modules.d/50plymouth
-%{_prefix}/lib/dracut/modules.d/50drm/module-setup.sh
-%{_prefix}/lib/dracut/modules.d/80cms
-%{_prefix}/lib/dracut/modules.d/80lvmmerge/README.md
-%{_prefix}/lib/dracut/modules.d/80lvmmerge/lvmmerge.sh
-%{_prefix}/lib/dracut/modules.d/80lvmmerge/module-setup.sh
-%{_prefix}/lib/dracut/modules.d/90btrfs
-%{_prefix}/lib/dracut/modules.d/90crypt
-%{_prefix}/lib/dracut/modules.d/90dm
-%{_prefix}/lib/dracut/modules.d/90dmraid
-%{_prefix}/lib/dracut/modules.d/90dmsquash-live
-%{_prefix}/lib/dracut/modules.d/90dmsquash-live-ntfs/module-setup.sh
-%{_prefix}/lib/dracut/modules.d/90kernel-modules
-%{_prefix}/lib/dracut/modules.d/90lvm
-%{_prefix}/lib/dracut/modules.d/90mdraid
-%{_prefix}/lib/dracut/modules.d/90multipath
-%{_prefix}/lib/dracut/modules.d/90multipath-hostonly/module-setup.sh
-%{_prefix}/lib/dracut/modules.d/90qemu
-%{_prefix}/lib/dracut/modules.d/91crypt-gpg
-%{_prefix}/lib/dracut/modules.d/91crypt-loop
-%{_prefix}/lib/dracut/modules.d/95debug
-%{_prefix}/lib/dracut/modules.d/95resume
-%{_prefix}/lib/dracut/modules.d/95rootfs-block
-%{_prefix}/lib/dracut/modules.d/95dasd
-%{_prefix}/lib/dracut/modules.d/95dasd_mod
-%{_prefix}/lib/dracut/modules.d/95fstab-sys
-%{_prefix}/lib/dracut/modules.d/95zfcp
-%{_prefix}/lib/dracut/modules.d/95terminfo
-%{_prefix}/lib/dracut/modules.d/95udev-rules
-%{_prefix}/lib/dracut/modules.d/95virtfs
-%{_prefix}/lib/dracut/modules.d/97biosdevname
-%{_prefix}/lib/dracut/modules.d/98dracut-systemd
-%{_prefix}/lib/dracut/modules.d/98ecryptfs
-%{_prefix}/lib/dracut/modules.d/98pollcdrom
-%{_prefix}/lib/dracut/modules.d/98syslog
-%{_prefix}/lib/dracut/modules.d/98usrmount
-%{_prefix}/lib/dracut/modules.d/99base
-%{_prefix}/lib/dracut/modules.d/99fs-lib
-%{_prefix}/lib/dracut/modules.d/99img-lib
-%{_prefix}/lib/dracut/modules.d/99shutdown
-%{_prefix}/lib/dracut/modules.d/00bash/module-setup.sh
-%{_prefix}/lib/dracut/modules.d/03modsign/load-modsign-keys.sh
-%{_prefix}/lib/dracut/modules.d/03modsign/module-setup.sh
-%{_prefix}/lib/dracut/modules.d/95dasd_rules/module-setup.sh
-%{_prefix}/lib/dracut/modules.d/95dasd_rules/parse-dasd.sh
-%{_prefix}/lib/dracut/modules.d/95fcoe-uefi/module-setup.sh
-%{_prefix}/lib/dracut/modules.d/95fcoe-uefi/parse-uefifcoe.sh
-%{_prefix}/lib/dracut/modules.d/95zfcp_rules/module-setup.sh
-%{_prefix}/lib/dracut/modules.d/95zfcp_rules/parse-zfcp.sh
-%{_prefix}/lib/dracut/modules.d/99uefi-lib/module-setup.sh
-%{_prefix}/lib/dracut/modules.d/99uefi-lib/uefi-lib.sh
-%{_prefix}/lib/systemd/system/dracut-shutdown.service
-%{_prefix}/lib/systemd/system/sysinit.target.wants/dracut-shutdown.service
-%{_prefix}/lib/systemd/system/dracut-cmdline.service
-%{_prefix}/lib/systemd/system/dracut-initqueue.service
-%{_prefix}/lib/systemd/system/dracut-mount.service
-%{_prefix}/lib/systemd/system/dracut-pre-mount.service
-%{_prefix}/lib/systemd/system/dracut-pre-pivot.service
-%{_prefix}/lib/systemd/system/dracut-pre-trigger.service
-%{_prefix}/lib/systemd/system/dracut-pre-udev.service
-%{_prefix}/lib/systemd/system/initrd.target.wants/dracut-cmdline.service
-%{_prefix}/lib/systemd/system/initrd.target.wants/dracut-initqueue.service
-%{_prefix}/lib/systemd/system/initrd.target.wants/dracut-mount.service
-%{_prefix}/lib/systemd/system/initrd.target.wants/dracut-pre-mount.service
-%{_prefix}/lib/systemd/system/initrd.target.wants/dracut-pre-pivot.service
-%{_prefix}/lib/systemd/system/initrd.target.wants/dracut-pre-trigger.service
-%{_prefix}/lib/systemd/system/initrd.target.wants/dracut-pre-udev.service
-%{_prefix}/lib/kernel/install.d/50-dracut.install
-%{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
-%{_datadir}/bash-completion/completions/dracut
-%{_datadir}/bash-completion/completions/lsinitrd
-%{_datadir}/pkgconfig/dracut.pc
+/usr/bin/mkinitrd
+/usr/bin/lsinitrd
+%dir /usr/lib/dracut
+%dir /usr/lib/dracut/modules.d
+/usr/lib/dracut/dracut-init.sh
+/usr/lib/dracut/dracut-functions.sh
+/usr/lib/dracut/dracut-functions
+/usr/lib/dracut/dracut-version.sh
+/usr/lib/dracut/dracut-logger.sh
+/usr/lib/dracut/dracut-initramfs-restore
+/usr/lib/dracut/dracut-install
+/usr/lib/dracut/skipcpio
+/usr/lib/dracut/modules.d/00dash
+/usr/lib/dracut/modules.d/00bootchart
+/usr/lib/dracut/modules.d/00systemd-bootchart/module-setup.sh
+/usr/lib/dracut/modules.d/00systemd/module-setup.sh
+/usr/lib/dracut/modules.d/01systemd-initrd/module-setup.sh
+/usr/lib/dracut/modules.d/02systemd-networkd/module-setup.sh
+/usr/lib/dracut/modules.d/03rescue/module-setup.sh
+/usr/lib/dracut/modules.d/04watchdog
+/usr/lib/dracut/modules.d/05busybox
+/usr/lib/dracut/modules.d/10i18n
+/usr/lib/dracut/modules.d/30convertfs
+/usr/lib/dracut/modules.d/45url-lib
+/usr/lib/dracut/modules.d/50plymouth
+/usr/lib/dracut/modules.d/50drm/module-setup.sh
+/usr/lib/dracut/modules.d/80cms
+/usr/lib/dracut/modules.d/80lvmmerge/README.md
+/usr/lib/dracut/modules.d/80lvmmerge/lvmmerge.sh
+/usr/lib/dracut/modules.d/80lvmmerge/module-setup.sh
+/usr/lib/dracut/modules.d/90btrfs
+/usr/lib/dracut/modules.d/90crypt
+/usr/lib/dracut/modules.d/90dm
+/usr/lib/dracut/modules.d/90dmraid
+/usr/lib/dracut/modules.d/90dmsquash-live
+/usr/lib/dracut/modules.d/90dmsquash-live-ntfs/module-setup.sh
+/usr/lib/dracut/modules.d/90kernel-modules
+/usr/lib/dracut/modules.d/90lvm
+/usr/lib/dracut/modules.d/90mdraid
+/usr/lib/dracut/modules.d/90multipath
+/usr/lib/dracut/modules.d/90multipath-hostonly/module-setup.sh
+/usr/lib/dracut/modules.d/90qemu
+/usr/lib/dracut/modules.d/91crypt-gpg
+/usr/lib/dracut/modules.d/91crypt-loop
+/usr/lib/dracut/modules.d/95debug
+/usr/lib/dracut/modules.d/95resume
+/usr/lib/dracut/modules.d/95rootfs-block
+/usr/lib/dracut/modules.d/95dasd
+/usr/lib/dracut/modules.d/95dasd_mod
+/usr/lib/dracut/modules.d/95fstab-sys
+/usr/lib/dracut/modules.d/95zfcp
+/usr/lib/dracut/modules.d/95terminfo
+/usr/lib/dracut/modules.d/95udev-rules
+/usr/lib/dracut/modules.d/95virtfs
+/usr/lib/dracut/modules.d/97biosdevname
+/usr/lib/dracut/modules.d/98dracut-systemd
+/usr/lib/dracut/modules.d/98ecryptfs
+/usr/lib/dracut/modules.d/98pollcdrom
+/usr/lib/dracut/modules.d/98syslog
+/usr/lib/dracut/modules.d/98usrmount
+/usr/lib/dracut/modules.d/99base
+/usr/lib/dracut/modules.d/99fs-lib
+/usr/lib/dracut/modules.d/99img-lib
+/usr/lib/dracut/modules.d/99shutdown
+/usr/lib/dracut/modules.d/00bash/module-setup.sh
+/usr/lib/dracut/modules.d/03modsign/load-modsign-keys.sh
+/usr/lib/dracut/modules.d/03modsign/module-setup.sh
+/usr/lib/dracut/modules.d/95dasd_rules/module-setup.sh
+/usr/lib/dracut/modules.d/95dasd_rules/parse-dasd.sh
+/usr/lib/dracut/modules.d/95fcoe-uefi/module-setup.sh
+/usr/lib/dracut/modules.d/95fcoe-uefi/parse-uefifcoe.sh
+/usr/lib/dracut/modules.d/95zfcp_rules/module-setup.sh
+/usr/lib/dracut/modules.d/95zfcp_rules/parse-zfcp.sh
+/usr/lib/dracut/modules.d/99uefi-lib/module-setup.sh
+/usr/lib/dracut/modules.d/99uefi-lib/uefi-lib.sh
+/usr/lib/systemd/system/dracut-shutdown.service
+/usr/lib/systemd/system/sysinit.target.wants/dracut-shutdown.service
+/usr/lib/systemd/system/dracut-cmdline.service
+/usr/lib/systemd/system/dracut-initqueue.service
+/usr/lib/systemd/system/dracut-mount.service
+/usr/lib/systemd/system/dracut-pre-mount.service
+/usr/lib/systemd/system/dracut-pre-pivot.service
+/usr/lib/systemd/system/dracut-pre-trigger.service
+/usr/lib/systemd/system/dracut-pre-udev.service
+/usr/lib/systemd/system/initrd.target.wants/dracut-cmdline.service
+/usr/lib/systemd/system/initrd.target.wants/dracut-initqueue.service
+/usr/lib/systemd/system/initrd.target.wants/dracut-mount.service
+/usr/lib/systemd/system/initrd.target.wants/dracut-pre-mount.service
+/usr/lib/systemd/system/initrd.target.wants/dracut-pre-pivot.service
+/usr/lib/systemd/system/initrd.target.wants/dracut-pre-trigger.service
+/usr/lib/systemd/system/initrd.target.wants/dracut-pre-udev.service
+/usr/lib/kernel/install.d/50-dracut.install
+/usr/lib/kernel/install.d/51-dracut-rescue.install
+/usr/share/bash-completion/completions/dracut
+/usr/share/bash-completion/completions/lsinitrd
+/usr/share/pkgconfig/dracut.pc
 
 %files -n dracut-network
 %defattr(0644,root,root,0755)
-%{_prefix}/lib/dracut/modules.d/40network
-%{_prefix}/lib/dracut/modules.d/95fcoe
-%{_prefix}/lib/dracut/modules.d/95iscsi
-%{_prefix}/lib/dracut/modules.d/90livenet
-%{_prefix}/lib/dracut/modules.d/90qemu-net
-%{_prefix}/lib/dracut/modules.d/95cifs
-%{_prefix}/lib/dracut/modules.d/95nbd
-%{_prefix}/lib/dracut/modules.d/95nfs
-%{_prefix}/lib/dracut/modules.d/95ssh-client
-%{_prefix}/lib/dracut/modules.d/45ifcfg
-%{_prefix}/lib/dracut/modules.d/95znet
-%{_prefix}/lib/dracut/modules.d/90kernel-network-modules/module-setup.sh
+/usr/lib/dracut/modules.d/40network
+/usr/lib/dracut/modules.d/95fcoe
+/usr/lib/dracut/modules.d/95iscsi
+/usr/lib/dracut/modules.d/90livenet
+/usr/lib/dracut/modules.d/90qemu-net
+/usr/lib/dracut/modules.d/95cifs
+/usr/lib/dracut/modules.d/95nbd
+/usr/lib/dracut/modules.d/95nfs
+/usr/lib/dracut/modules.d/95ssh-client
+/usr/lib/dracut/modules.d/45ifcfg
+/usr/lib/dracut/modules.d/95znet
+/usr/lib/dracut/modules.d/90kernel-network-modules/module-setup.sh
 
 %files -n dracut-caps
 %defattr(0644,root,root,0755)
-%{_prefix}/lib/dracut/modules.d/02caps
+/usr/lib/dracut/modules.d/02caps
 
