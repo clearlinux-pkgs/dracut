@@ -1,6 +1,6 @@
 Name:           dracut
 Version:        046
-Release:        20
+Release:        21
 License:        GPL-2.0+ LGPL-2.1+
 Summary:        Initramfs generator
 Url:            https://dracut.wiki.kernel.org/
@@ -10,6 +10,7 @@ Requires:       libc-bin
 Requires:       findutils-bin
 Requires:       cpio-bin
 BuildRequires:  kmod-dev
+Patch0:          0001-Crypt-Using-uname-m-instead-arch-command.patch
 
 %description
 Initramfs generator.
@@ -30,6 +31,7 @@ Initramfs generator.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 ./configure --disable-documentation

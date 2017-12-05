@@ -1,0 +1,26 @@
+From 76b3a65973e9a3def1b043ad4068317d85341582 Mon Sep 17 00:00:00 2001
+From: Josue David Hernandez <josue.d.hernandez.gutierrez@intel.com>
+Date: Tue, 5 Dec 2017 11:36:33 -0600
+Subject: [PATCH] Crypt: Using uname -m instead arch command
+
+Signed-off-by: Josue David Hernandez <josue.d.hernandez.gutierrez@intel.com>
+---
+ modules.d/90crypt/module-setup.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules.d/90crypt/module-setup.sh b/modules.d/90crypt/module-setup.sh
+index 9c1be99..62a49bc 100755
+--- a/modules.d/90crypt/module-setup.sh
++++ b/modules.d/90crypt/module-setup.sh
+@@ -25,7 +25,7 @@ depends() {
+ # called by dracut
+ installkernel() {
+     hostonly="" instmods drbg
+-    arch=$(arch)
++    arch=$(uname -m)
+     [[ $arch == x86_64 ]] && arch=x86
+     instmods dm_crypt =crypto =drivers/crypto =arch/$arch/crypto
+ }
+-- 
+2.15.1
+
