@@ -1,6 +1,6 @@
 Name:           dracut
 Version:        046
-Release:        21
+Release:        22
 License:        GPL-2.0+ LGPL-2.1+
 Summary:        Initramfs generator
 Url:            https://dracut.wiki.kernel.org/
