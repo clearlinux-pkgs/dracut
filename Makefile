@@ -1,7 +1,5 @@
 PKG_NAME := dracut
-VERSION := 046
-TWODIGIT := 046
-URL := https://www.kernel.org/pub/linux/utils/boot/dracut/dracut-046.tar.xz
-TARBALL_PREFIX := dracut-046
+URL = https://github.com/dracutdevs/dracut/archive/047.tar.gz
+ARCHIVES = 
 
 include ../common/Makefile.common
