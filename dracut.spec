@@ -4,7 +4,7 @@
 #
 Name     : dracut
 Version  : 047
-Release  : 24
+Release  : 25
 URL      : https://github.com/dracutdevs/dracut/archive/047.tar.gz
 Source0  : https://github.com/dracutdevs/dracut/archive/047.tar.gz
 Summary  : Initramfs generator using udev
@@ -75,14 +75,19 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1522361260
+export SOURCE_DATE_EPOCH=1522361525
 %configure --disable-static --libdir=/usr/lib
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1522361260
+export SOURCE_DATE_EPOCH=1522361525
 rm -rf %{buildroot}
 %make_install
+## make_install_append content
+release=%{release}
+release_no_build=${release%.*}
+echo "DRACUT_VERSION=%{version}-$release_no_build" > %{buildroot}/usr/lib/dracut/dracut-version.sh
+## make_install_append end
 
 %files
 %defattr(-,root,root,-)

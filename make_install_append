@@ -1,0 +1,3 @@
+release=%{release}
+release_no_build=${release%.*}
+echo "DRACUT_VERSION=%{version}-$release_no_build" > %{buildroot}/usr/lib/dracut/dracut-version.sh
