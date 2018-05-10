@@ -4,7 +4,7 @@
 #
 Name     : dracut
 Version  : 047
-Release  : 25
+Release  : 26
 URL      : https://github.com/dracutdevs/dracut/archive/047.tar.gz
 Source0  : https://github.com/dracutdevs/dracut/archive/047.tar.gz
 Summary  : Initramfs generator using udev
