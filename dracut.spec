@@ -4,7 +4,7 @@
 #
 Name     : dracut
 Version  : 049
-Release  : 28
+Release  : 29
 URL      : https://github.com/dracutdevs/dracut/archive/049.tar.gz
 Source0  : https://github.com/dracutdevs/dracut/archive/049.tar.gz
 Summary  : Initramfs generator using udev
@@ -20,7 +20,6 @@ Requires: libc-bin
 BuildRequires : asciidoc
 BuildRequires : kmod-dev
 BuildRequires : libxslt
-BuildRequires : python-core
 Patch1: 0001-Crypt-Using-uname-m-instead-arch-command.patch
 
 %description
@@ -36,7 +35,6 @@ Summary: bin components for the dracut package.
 Group: Binaries
 Requires: dracut-data = %{version}-%{release}
 Requires: dracut-license = %{version}-%{release}
-Requires: dracut-man = %{version}-%{release}
 
 %description bin
 bin components for the dracut package.
@@ -56,6 +54,7 @@ Group: Development
 Requires: dracut-bin = %{version}-%{release}
 Requires: dracut-data = %{version}-%{release}
 Provides: dracut-devel = %{version}-%{release}
+Requires: dracut = %{version}-%{release}
 
 %description dev
 dev components for the dracut package.
@@ -85,16 +84,24 @@ man components for the dracut package.
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1539895097
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1570814085
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %configure --disable-static --libdir=/usr/lib
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1539895097
+export SOURCE_DATE_EPOCH=1570814085
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/dracut
-cp COPYING %{buildroot}/usr/share/package-licenses/dracut/COPYING
+cp %{_builddir}/dracut-049/COPYING %{buildroot}/usr/share/package-licenses/dracut/4cc77b90af91e615a64ae04893fdffa7939db84c
 %make_install
 ## install_append content
 release=%{release}
@@ -446,7 +453,7 @@ echo "DRACUT_VERSION=%{version}-$release_no_build" > %{buildroot}/usr/lib/dracut
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/dracut/COPYING
+/usr/share/package-licenses/dracut/4cc77b90af91e615a64ae04893fdffa7939db84c
 
 %files man
 %defattr(0644,root,root,0755)
