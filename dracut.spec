@@ -4,7 +4,7 @@
 #
 Name     : dracut
 Version  : 049
-Release  : 29
+Release  : 30
 URL      : https://github.com/dracutdevs/dracut/archive/049.tar.gz
 Source0  : https://github.com/dracutdevs/dracut/archive/049.tar.gz
 Summary  : Initramfs generator using udev
@@ -78,6 +78,7 @@ man components for the dracut package.
 
 %prep
 %setup -q -n dracut-049
+cd %{_builddir}/dracut-049
 %patch1 -p1
 
 %build
@@ -85,7 +86,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1570814085
+export SOURCE_DATE_EPOCH=1576003787
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -98,7 +99,7 @@ export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1570814085
+export SOURCE_DATE_EPOCH=1576003787
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/dracut
 cp %{_builddir}/dracut-049/COPYING %{buildroot}/usr/share/package-licenses/dracut/4cc77b90af91e615a64ae04893fdffa7939db84c
@@ -203,7 +204,6 @@ echo "DRACUT_VERSION=%{version}-$release_no_build" > %{buildroot}/usr/lib/dracut
 /usr/lib/dracut/modules.d/90crypt/crypt-run-generator.sh
 /usr/lib/dracut/modules.d/90crypt/cryptroot-ask.sh
 /usr/lib/dracut/modules.d/90crypt/module-setup.sh
-/usr/lib/dracut/modules.d/90crypt/module-setup.sh.orig
 /usr/lib/dracut/modules.d/90crypt/parse-crypt.sh
 /usr/lib/dracut/modules.d/90crypt/parse-keydev.sh
 /usr/lib/dracut/modules.d/90crypt/probe-keydev.sh
